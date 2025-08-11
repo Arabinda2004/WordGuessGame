@@ -26,7 +26,6 @@ public class Game {
         int collection = words.length;
         int random_no = rd.nextInt(collection);
         String word = words[random_no];
-//        System.out.println(word);
         word = word.toLowerCase();
         char[] strArray = word.toCharArray();
         int n = strArray.length;

@@ -12,26 +12,46 @@ public class Game {
 
         Scanner sc = new Scanner(System.in);
         Random rd = new Random();
-        String[] words = {
-                "apple", "water", "train", "light", "phone", "paper", "glass", "table", "chair", "watch",
-                "plant", "books", "class", "board", "mouse", "keyboard", "bottle", "shirt", "pants", "shoes",
-                "cycle", "truck", "plane", "metro", "road", "river", "field", "house", "shop", "store",
-                "money", "price", "offer", "bank", "card", "phone", "email", "group", "order", "visit",
-                "write", "read", "speak", "study", "learn", "teach", "notes", "files", "chart", "print",
-                "clock", "alarm", "sound", "music", "radio", "video", "photo", "movie", "stage", "drama",
-                "happy", "smile", "laugh", "angry", "tired", "sleep", "dream", "fresh", "clean", "neat",
-                "green", "white", "black", "brown", "blue", "cream", "stone", "steel", "paper", "cloth",
-                "serve", "visit", "start", "stop", "check", "build", "carry", "drive", "reach", "plant"
+        String[][] categorizedWords = {
+                {"Fruits", "apple", "banana", "orange", "grape", "mango", "cherry", "peach", "berry", "lemon", "kiwi"},
+                {"Vegetables", "carrot", "broccoli", "spinach", "tomato", "potato", "onion", "pepper", "lettuce", "corn", "beans"},
+                {"Furniture", "table", "chair", "sofa", "bed", "desk", "shelf", "cabinet", "dresser", "bench", "stool"},
+                {"Accessories", "watch", "glasses", "belt", "hat", "bag", "necklace", "bracelet", "ring", "scarf", "wallet"},
+                {"Clothing", "shirt", "pants", "shoes", "jacket", "dress", "socks", "hat", "coat", "sweater", "shorts"},
+                {"Colors", "red", "blue", "green", "yellow", "black", "white", "purple", "orange", "pink", "brown"},
+                {"Vehicles", "car", "bike", "bus", "truck", "plane", "train", "boat", "motorcycle", "metro", "taxi"},
+                {"Objects", "book", "pen", "phone", "computer", "bottle", "key", "mirror", "clock", "lamp", "camera"},
+                {"Animals", "dog", "cat", "bird", "fish", "horse", "cow", "sheep", "lion", "tiger", "elephant"},
+                {"Sports", "football", "basketball", "tennis", "cricket", "swimming", "running", "golf", "volleyball", "baseball", "hockey"},
+                {"Food", "pizza", "burger", "pasta", "rice", "bread", "cheese", "meat", "fish", "soup", "salad"},
+                {"Drinks", "water", "juice", "coffee", "tea", "milk", "soda", "wine", "beer", "smoothie", "lemonade"},
+                {"Body Parts", "head", "hand", "foot", "eye", "ear", "nose", "mouth", "arm", "leg", "finger"},
+                {"Weather", "sunny", "rainy", "cloudy", "windy", "stormy", "snowy", "hot", "cold", "warm", "humid"},
+                {"Emotions", "happy", "sad", "angry", "excited", "worried", "calm", "surprised", "scared", "proud", "nervous"},
+                {"School", "teacher", "student", "classroom", "homework", "test", "book", "pencil", "eraser", "ruler", "backpack"},
+                {"Kitchen", "stove", "oven", "fridge", "microwave", "knife", "fork", "spoon", "plate", "bowl", "cup"},
+                {"Technology", "computer", "laptop", "tablet", "smartphone", "keyboard", "mouse", "monitor", "printer", "router", "speaker"},
+                {"Music", "piano", "guitar", "violin", "drums", "flute", "trumpet", "saxophone", "song", "rhythm", "melody"},
+                {"Nature", "tree", "flower", "grass", "mountain", "river", "ocean", "forest", "desert", "valley", "beach"}
         };
-        int collection = words.length;
-        int random_no = rd.nextInt(collection);
-        String word = words[random_no];
-        word = word.toLowerCase();
+
+        int randCatgInd = rd.nextInt(8);
+        String randCatg = categorizedWords[randCatgInd][0].toUpperCase();
+//        System.out.println(randCatg);
+
+        int collection = categorizedWords[randCatgInd].length;
+//        System.out.println(collection);
+        int random_no = rd.nextInt(collection) + 1;
+//        System.out.println(random_no);
+        String word = categorizedWords[randCatgInd][random_no];
+//        System.out.println(word);
+        word = word.toUpperCase();
         char[] strArray = word.toCharArray();
         int n = strArray.length;
         char[] show = new char[n];
         boolean[] result = new boolean[n];
 
+        System.out.println("Category: " + randCatg);
         Arrays.fill(show, '-');
         System.out.print("The word: ");
         view(show);
@@ -44,6 +64,7 @@ public class Game {
             System.out.print("Enter your guess (single letter): ");
 
             char guess = sc.next().charAt(0);
+            guess = Character.toUpperCase(guess);
             op = index(strArray, guess, result);
             for (int i = 0; i < n; i++) {
                 if (op[i]) {
@@ -61,7 +82,7 @@ public class Game {
             }
             boolean isComplete = isPresent(show, '-');
             if (!isComplete) {
-                System.out.println("\n🎉 SUCCESS! You guessed the word: " + word.toUpperCase());
+                System.out.println("🎉 SUCCESS! You guessed the word: " + word.toUpperCase());
                 return;
             } else {
                 view(show);
